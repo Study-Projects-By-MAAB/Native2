@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 /**
  * Sample React Native App
  * https://github.com/facebook/react-native
@@ -10,6 +11,7 @@ import React from 'react';
 import {
   Alert,
   Button,
+  FlatList,
   Image,
   Pressable,
   ScrollView,
@@ -59,6 +61,24 @@ function Section({children, title}: SectionProps): React.JSX.Element {
   );
 }
 
+const data = [
+  {
+    id: 1,
+    name: 'Shakil',
+    email: 'Shakil123@gmail.com',
+  },
+  {
+    id: 2,
+    name: 'John Doe',
+    email: 'john.doe@example.com',
+  },
+  {
+    id: 3,
+    name: 'Jane Smith',
+    email: 'jane.smith@example.com',
+  },
+];
+
 function App(): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
 
@@ -103,12 +123,43 @@ function App(): React.JSX.Element {
             style={{backgroundColor: 'green', padding: 10, borderRadius: 5}}
             onPress={() => {
               Alert.alert('Hello');
-            }} >
+            }}>
             <Text>It's Touchable Opacity button</Text>
           </TouchableOpacity>
           <Pressable style={{padding: 10, backgroundColor: 'yellow'}}>
             <Text>Pressable button</Text>
           </Pressable>
+        </View>
+        <View
+          style={{
+            backgroundColor: isDarkMode ? Colors.black : Colors.white,
+            paddingHorizontal: safePadding,
+            paddingBottom: safePadding,
+          }}>
+          <FlatList
+            style={{
+              padding: 10,
+              width: '100%',
+              flex: 1,
+              backgroundColor: 'blue',
+            }}
+            data={data}
+            numColumns={2}
+            columnWrapperStyle={{gap: 10}}
+            ItemSeparatorComponent={() => <View style={{height: 10}} />}
+            renderItem={({item}) => (
+              <View
+                style={{
+                  padding: 10,
+                  backgroundColor: 'red',
+                  borderRadius: 50,
+                  width: 100,
+                }}>
+                <Text>{item.name}</Text>
+                <Text>{item.email}</Text>
+              </View>
+            )}
+          />
         </View>
         <View style={{paddingRight: safePadding}}>
           <Header />
